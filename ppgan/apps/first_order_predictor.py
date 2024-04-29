@@ -194,6 +194,7 @@ class FirstOrderPredictor(BasePredictor):
             face_image = source_image.copy()[rec[1]:rec[3], rec[0]:rec[2]]
             face_image = cv2.resize(face_image,
                                     (self.image_size, self.image_size)) / 255.0
+            print('tesssss222')
             predictions = get_prediction(face_image)
             results.append({
                 'rec':
@@ -205,6 +206,7 @@ class FirstOrderPredictor(BasePredictor):
                 break
         out_frame = []
 
+        print('tesssss1')
         for i in range(len(driving_video)):
             frame = source_image.copy()
             for result in results:
