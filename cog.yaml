@@ -1,0 +1,33 @@
+build:
+  gpu: true
+  cuda: "11.2"
+  python_version: "3.10"
+  system_packages:
+    - "python3-pip"
+  python_requirements: requirements.txt
+  run:
+    - DEBIAN_FRONTEND=noninteractive apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -qqy install python3-pip ffmpeg git less nano libsm6 libxext6 libxrender-dev && rm -rf /var/lib/apt/lists/*
+    #- apt-get update && apt-get install -y libgl1-mesa-glx
+    #- DEBIAN_FRONTEND=noninteractive apt-get install -qqy libglib2.0-0
+    #- apt-get install -y --no-install-recommends libsndfile1
+    #- apt-get install -y ffmpeg
+    - ln -s /usr/bin/python3 /usr/bin/python
+    - pip install --upgrade pip
+    #- pip install -v -e .
+    - pip install paddlepaddle-gpu==2.6.1
+    - pip install cog==0.9.20
+    #- pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+    - mkdir -p ./checkpoints
+    # Download models
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/mapping_00109-model.pth.tar -O  ./checkpoints/mapping_00109-model.pth.tar
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/mapping_00229-model.pth.tar -O  ./checkpoints/mapping_00229-model.pth.tar
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/SadTalker_V0.0.2_256.safetensors -O  ./checkpoints/SadTalker_V0.0.2_256.safetensors
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/SadTalker_V0.0.2_512.safetensors -O  ./checkpoints/SadTalker_V0.0.2_512.safetensors
+    #- mkdir -p ./gfpgan/weights
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/alignment_WFLW_4HG.pth -O ./gfpgan/weights/alignment_WFLW_4HG.pth
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/detection_Resnet50_Final.pth -O ./gfpgan/weights/detection_Resnet50_Final.pth
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/GFPGANv1.4.pth -O ./gfpgan/weights/GFPGANv1.4.pth
+    #- wget -nc https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/parsing_parsenet.pth -O ./gfpgan/weights/parsing_parsenet.pth
+    #- mkdir -p /root/.cache/torch/hub/checkpoints/ && wget --output-document "/root/.cache/torch/hub/checkpoints/s3fd-619a316812.pth" "https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/s3fd-619a316812.pth"
+    #- mkdir -p /root/.cache/torch/hub/checkpoints/ && wget --output-document "/root/.cache/torch/hub/checkpoints/2DFAN4-cd938726ad.zip" "https://github.com/aaicoder/aimodel/releases/download/sadtalker-v0.0.2/2DFAN4-cd938726ad.zip"
+predict: "predict.py:Predictor"
